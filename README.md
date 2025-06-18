@@ -1,1 +1,1 @@
-# frontend_book
+# storyloom-your book companion
