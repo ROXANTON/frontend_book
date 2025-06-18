@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="book-detail-title">Book Title - StoryLoom</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Harmond+Free+Display&family=Humane:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="detail-page-body">
+    <header class="main-header">
+        <h1><a href="index.html" class="home-link">StoryLoom</a></h1>
+    </header>
+    <main class="book-detail-content">
+        <h2 id="book-heading"></h2>
+        <p id="book-short-description" class="short-description"></p>
+        <p><strong>Author:</strong> <span id="book-author"></span></p>
+        <p><strong>Genre:</strong> <span id="book-genre"></span></p>
+        <h3>Review:</h3>
+        <p id="book-review"></p>
+        <div id="ebook-link-section" style="display: none;">
+            <p><a href="#" id="ebook-link" target="_blank" class="ebook-button">Read Ebook</a></p>
+        </div>
+    </main>
+    <script>
+        // Simple client-side rendering for book details (replace with backend data in real app)
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const title = params.get('title');
+            const author = params.get('author');
+            const genre = params.get('genre');
+            const review = params.get('review');
+            const primaryDesc = params.get('primaryDesc');
+            const ebookLink = params.get('ebookLink');
+
+            document.getElementById('book-detail-title').textContent = title ? `${title} - StoryLoom` : 'Book Details - StoryLoom';
+            document.getElementById('book-heading').textContent = title || 'Book Not Found';
+            document.getElementById('book-short-description').textContent = primaryDesc || 'No short description available.';
+            document.getElementById('book-author').textContent = author || 'Unknown';
+            document.getElementById('book-genre').textContent = genre || 'N/A';
+            document.getElementById('book-review').textContent = review || 'No reviews yet.';
+
+            const ebookLinkSection = document.getElementById('ebook-link-section');
+            const ebookLinkElement = document.getElementById('ebook-link');
+            if (ebookLink && ebookLink !== 'null') {
+                ebookLinkElement.href = ebookLink;
+                ebookLinkSection.style.display = 'block';
+            } else {
+                ebookLinkSection.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
