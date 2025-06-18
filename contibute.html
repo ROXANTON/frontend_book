@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribute to StoryLoom</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Harmond+Free+Display&family=Humane:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="contribute-page-body">
+    <header class="main-header">
+        <h1><a href="index.html" class="home-link">StoryLoom</a></h1>
+    </header>
+    <main class="contribute-content">
+        <h2>Share your stories about your fav book</h2>
+        <form id="review-form">
+            <div class="form-group">
+                <label for="author-name">Author Name:</label>
+                <input type="text" id="author-name" name="authorName" required>
+            </div>
+            <div class="form-group">
+                <label for="book-name">Book Name:</label>
+                <input type="text" id="book-name" name="bookName" required>
+            </div>
+            <div class="form-group">
+                <label for="short-description">Short Description:</label>
+                <textarea id="short-description" name="shortDescription" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="genre">Genre:</label>
+                <input type="text" id="genre" name="genre" required>
+            </div>
+            <div class="form-group">
+                <label for="review">Your Review:</label>
+                <textarea id="review" name="review" rows="6" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="rating">Rating:</label>
+                <div class="star-rating" id="rating">
+                    <span data-value="1">&#9733;</span>
+                    <span data-value="2">&#9733;</span>
+                    <span data-value="3">&#9733;</span>
+                    <span data-value="4">&#9733;</span>
+                    <span data-value="5">&#9733;</span>
+                </div>
+                <input type="hidden" id="selected-rating" name="rating" value="0">
+            </div>
+            <div class="form-group">
+                <label for="reviewer-name">Your Name (Reviewer):</label>
+                <input type="text" id="reviewer-name" name="reviewerName" required>
+            </div>
+            <button type="submit" class="submit-button">Submit Review</button>
+        </form>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const stars = document.querySelectorAll('.star-rating span');
+            const selectedRatingInput = document.getElementById('selected-rating');
+            const reviewForm = document.getElementById('review-form');
+
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const value = parseInt(star.dataset.value);
+                    selectedRatingInput.value = value;
+                    stars.forEach((s, index) => {
+                        if (index < value) {
+                            s.classList.add('selected');
+                        } else {
+                            s.classList.remove('selected');
+                        }
+                    });
+                });
+                star.addEventListener('mouseover', () => {
+                    const value = parseInt(star.dataset.value);
+                    stars.forEach((s, index) => {
+                        if (index < value) {
+                            s.classList.add('hover');
+                        } else {
+                            s.classList.remove('hover');
+                        }
+                    });
+                });
+                star.addEventListener('mouseout', () => {
+                    stars.forEach(s => s.classList.remove('hover'));
+                });
+            });
+
+            reviewForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                // In a real application, you would send this data to your backend
+                const formData = new FormData(reviewForm);
+                const reviewData = {};
+                for (let [key, value] of formData.entries()) {
+                    reviewData[key] = value;
+                }
+
+                console.log('Review data to be sent:', reviewData);
+
+                // Simulate backend check and storage
+                // This part would be replaced by actual AJAX call (fetch API or XMLHttpRequest) to your Java backend
+                // Example of what would happen in the backend conceptually:
+                // 1. Backend receives reviewData
+                // 2. Connects to MySQL database
+                // 3. Queries database: SELECT * FROM reviews WHERE book_name = ? AND author_name = ?
+                // 4. If exists: UPDATE existing review or ADD new review to that book's page/entry
+                // 5. If not exists: INSERT new book into books table, then INSERT new review linked to that book
+                // 6. Sends success response back to frontend
+
+                alert("Congrats, your story has been shared!");
+                window.location.href = "index.html"; // Redirect to homepage
+            });
+        });
+    </script>
+</body>
+</html>
